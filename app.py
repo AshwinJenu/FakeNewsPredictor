@@ -69,10 +69,10 @@ OTP_DB = {}
 OTP_EXPIRATION_TIME_SECONDS = 30  # 30 sec
 
 
-def generate_otp(expiration_time_seconds):
-    otp = str(random.randint(1000, 9999))
-    expiration_time = datetime.datetime.now() + timedelta(seconds=expiration_time_seconds)
-    return otp, expiration_time
+# def generate_otp(expiration_time_seconds):
+#     otp = str(random.randint(1000, 9999))
+#     expiration_time = datetime.datetime.now() + timedelta(seconds=expiration_time_seconds)
+#     return otp, expiration_time
 
 
 # def send_otp(email, otp):
@@ -87,36 +87,36 @@ def generate_otp(expiration_time_seconds):
 #         smtp.send_message(msg)
 
 @app.route('/verify', methods=['POST'])
-def verify_otp():
-    email = request.json['email']
-    otp = request.json['otp']
-    #articles = request.json['rNews']
-    #print("verify",articles)
-    print(f"Reached VERIFY {email} {otp}")
-    if OTP_DB.get(email):
-        # Get the OTP and expiration time from the OTP_DB
-        db_otp = OTP_DB[email]['otp']
-        db_expiration_time = OTP_DB[email]['expiration_time']
+# def verify_otp():
+#     email = request.json['email']
+#     otp = request.json['otp']
+#     #articles = request.json['rNews']
+#     #print("verify",articles)
+#     print(f"Reached VERIFY {email} {otp}")
+#     if OTP_DB.get(email):
+#         # Get the OTP and expiration time from the OTP_DB
+#         db_otp = OTP_DB[email]['otp']
+#         db_expiration_time = OTP_DB[email]['expiration_time']
 
-        # Check if the OTP is valid
-        if db_otp == otp and datetime.datetime.now() < db_expiration_time:
-            print("OTP Verified")
-            #sendMail([email],articles)
-            return jsonify({"Response": True})
+#         # Check if the OTP is valid
+#         if db_otp == otp and datetime.datetime.now() < db_expiration_time:
+#             print("OTP Verified")
+#             #sendMail([email],articles)
+#             return jsonify({"Response": True})
 
-    # The OTP is invalid or has expired
-    return jsonify({"Response": False})
+#     # The OTP is invalid or has expired
+#     return jsonify({"Response": False})
 
 @app.route('/email', methods=['POST'])
 def handle_data():
     email = request.json['email']
     print(f"Reached EMAIL {email}")
     # Generate and send the OTP to the user's email
-    otp, otp_expiration_time = generate_otp(OTP_EXPIRATION_TIME_SECONDS)
-#     send_otp(email, otp)
+#     otp, otp_expiration_time = generate_otp(OTP_EXPIRATION_TIME_SECONDS)
+# #     send_otp(email, otp)
 
     # Store the OTP and expiration time in the OTP_DB
-    OTP_DB[email] = {'otp': otp, 'expiration_time': otp_expiration_time}
+#     OTP_DB[email] = {'otp': otp, 'expiration_time': otp_expiration_time}
 
     return jsonify({"Response": True})
 

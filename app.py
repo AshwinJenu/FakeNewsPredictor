@@ -76,7 +76,7 @@ def generate_otp(expiration_time_seconds):
 
 
 def send_otp(email, otp):
-    message = f'Your OTP is {otp}'
+    message = f"Your OTP is {otp}"
     msg = MIMEText(message)
     msg['Subject'] = 'OTP Verification'
     msg['From'] = EMAIL_ADDRESS

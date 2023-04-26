@@ -75,16 +75,16 @@ def generate_otp(expiration_time_seconds):
     return otp, expiration_time
 
 
-def send_otp(email, otp):
-    message = f"Your OTP is {otp}"
-    msg = MIMEText(message)
-    msg['Subject'] = 'OTP Verification'
-    msg['From'] = EMAIL_ADDRESS
-    msg['To'] = email
+# def send_otp(email, otp):
+#     message = f"Your OTP is {otp}"
+#     msg = MIMEText(message)
+#     msg['Subject'] = 'OTP Verification'
+#     msg['From'] = EMAIL_ADDRESS
+#     msg['To'] = email
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login('cybersentinels2@gmail.com', 'ucdywkafnzomexkz')
-        smtp.send_message(msg)
+#     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+#         smtp.login('cybersentinels2@gmail.com', 'ucdywkafnzomexkz')
+#         smtp.send_message(msg)
 
 @app.route('/verify', methods=['POST'])
 def verify_otp():
@@ -113,7 +113,7 @@ def handle_data():
     print(f"Reached EMAIL {email}")
     # Generate and send the OTP to the user's email
     otp, otp_expiration_time = generate_otp(OTP_EXPIRATION_TIME_SECONDS)
-    send_otp(email, otp)
+#     send_otp(email, otp)
 
     # Store the OTP and expiration time in the OTP_DB
     OTP_DB[email] = {'otp': otp, 'expiration_time': otp_expiration_time}
